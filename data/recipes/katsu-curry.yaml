@@ -1,0 +1,27 @@
+name: Katsu Curry
+
+ingredients:
+  - product: onion
+    quantity: 2
+    unit: unit
+
+  - product: carrot
+    quantity: 2
+    unit: unit
+
+  - product: celery
+    quantity: 1
+    unit: unit
+
+  - product: veg-stock
+    quantity: 1
+    unit: unit
+  
+  - product: tofu-xl
+    quantity: 1
+    unit: unit
+
+  - product: breadcrumbs
+    quantity: 50
+    unit: g
+
