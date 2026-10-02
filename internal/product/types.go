@@ -8,7 +8,8 @@ type Product struct {
 }
 
 type SainsburysProduct struct {
-	ProductUid int     `yaml:"product_uid"`
-	Quantity   float64 `yaml:"quantity"`
-	Unit       string  `yaml:"unit"`
+	SainId   string  `yaml:"sain_id"`
+	SKU      string  `yaml:"sku"`
+	Quantity float64 `yaml:"quantity"`
+	Unit     string  `yaml:"unit"`
 }

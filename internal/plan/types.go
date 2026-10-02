@@ -21,8 +21,10 @@ type PlanItem struct {
 	Unit string
 	// How many of the given product should we order
 	OrderQuantity int
-	// Sainsbury's product uid
-	SainsburysUid int
+	// Sainsbury's product id
+	SainsId string
+	// Sainsbury's product SKU
+	SKU string
 	// How many units of the product are contained in each Sainsbury's product
 	ProductUnits float64
 	// The validation status of the plan item

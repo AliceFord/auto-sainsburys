@@ -55,7 +55,8 @@ func Build(catalogue product.Catalogue, recipes []recipe.Recipe) (*Plan, error) 
 			Name:             prod.Name,
 			Unit:             req.Unit,
 			OrderQuantity:    orderQuantity,
-			SainsburysUid:    sainsburys.ProductUid,
+			SainsId:          sainsburys.SainId,
+			SKU:              sainsburys.SKU,
 			ProductUnits:     sainsburys.Quantity,
 			ValidationStatus: ValidationPending,
 		})

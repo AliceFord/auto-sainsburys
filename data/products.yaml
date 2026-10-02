@@ -1,7 +1,8 @@
 onion:
   name: Onion
   sainsburys:
-    product_uid: 131544
+    sain_id: ddh1vejr
+    sku: 131544
     quantity: 3
     unit: unit
 

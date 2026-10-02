@@ -30,5 +30,6 @@ func runValidate(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	return nil
+	// Write the validated order
+	return plan.Save(p)
 }
