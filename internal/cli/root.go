@@ -6,12 +6,13 @@ import (
 
 func New() *cobra.Command {
 	root := &cobra.Command{
-		Use:   "auto-sains",
+		Use:   "food",
 		Short: "Build recipes and add them to a Sainsbury's order",
 	}
 
 	root.AddCommand(
 		newAuthCommand(),
+		newPlanCommand(),
 	)
 
 	return root

@@ -1,7 +1,13 @@
-products:
-  onion:
-    name: Onion
-    sainsburys:
-      product_name: sainsburys-brown-onions-x3
-      quantity: 3
-      unit: unit
+onion:
+  name: Onion
+  sainsburys:
+    product_name: sainsburys-brown-onions-x3
+    quantity: 3
+    unit: unit
+
+carrot:
+  name: Carrot
+  sainsburys:
+    product_name: sainsburys-1kg-carrots
+    quantity: 6
+    unit: unit
