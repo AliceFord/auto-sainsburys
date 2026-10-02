@@ -21,8 +21,6 @@ func Build(catalogue product.Catalogue, recipes []recipe.Recipe) (*Plan, error) 
 
 	// Iterate over each recipe and its ingredients
 	for _, r := range recipes {
-		p.Recipes = append(p.Recipes, r.Name)
-
 		for _, ing := range r.Ingredients {
 			existing, found := requirements[ing.Product]
 
@@ -53,18 +51,17 @@ func Build(catalogue product.Catalogue, recipes []recipe.Recipe) (*Plan, error) 
 		orderQuantity := int(math.Ceil(req.Quantity / sainsburys.Quantity))
 
 		p.Items = append(p.Items, PlanItem{
-			Product: req.Product,
-			Name:    prod.Name,
-
-			RequiredQuantity: req.Quantity,
-			RequiredUnit:     req.Unit,
-
-			SainsburysName: sainsburys.ProductName,
-			OrderQuantity:  orderQuantity,
-
-			Included: true,
+			Product:          req.Product,
+			Name:             prod.Name,
+			Unit:             req.Unit,
+			OrderQuantity:    orderQuantity,
+			SainsburysUid:    sainsburys.ProductUid,
+			ProductUnits:     sainsburys.Quantity,
+			ValidationStatus: ValidationPending,
 		})
 	}
+
+	fmt.Printf("plan: %+v\n", p)
 
 	return p, nil
 }

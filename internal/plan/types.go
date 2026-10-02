@@ -1,19 +1,32 @@
 package plan
 
+const (
+	ValidationPending ValidationStatus = "pending"
+	ValidationValid   ValidationStatus = "valid"
+	ValidationInvalid ValidationStatus = "invalid"
+)
+
+type ValidationStatus string
+
 type Plan struct {
-	Recipes []string
-	Items   []PlanItem
+	Items []PlanItem
 }
 
 type PlanItem struct {
+	// Code name
 	Product string
-	Name    string
-
-	RequiredQuantity float64
-	RequiredUnit     string
-
-	SainsburysName string
-	OrderQuantity  int
-
-	Included bool
+	// Human-readable name
+	Name string
+	// Unit of measurement
+	Unit string
+	// How many of the given product should we order
+	OrderQuantity int
+	// Sainsbury's product uid
+	SainsburysUid int
+	// How many units of the product are contained in each Sainsbury's product
+	ProductUnits float64
+	// The validation status of the plan item
+	ValidationStatus ValidationStatus
+	// The reason for the validation status
+	ValidationReason string
 }

@@ -13,6 +13,7 @@ func New() *cobra.Command {
 	root.AddCommand(
 		newAuthCommand(),
 		newPlanCommand(),
+		newValidateCommand(),
 	)
 
 	return root

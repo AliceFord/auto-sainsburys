@@ -36,7 +36,20 @@ func runPlan(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	_, err = plan.Build(catalogue, recipes)
+	// Build plan
+	p, err := plan.Build(catalogue, recipes)
+	if err != nil {
+		return err
+	}
+
+	// Modify plan based on user input
+	err = EditOrder(p)
+	if err != nil {
+		return err
+	}
+
+	// Save plan
+	err = plan.Save(p)
 	if err != nil {
 		return err
 	}
