@@ -1,0 +1,10 @@
+name: Sticky Tofu
+
+ingredients:
+  - product: tofu-xl
+    quantity: 1
+    unit: unit
+  
+  - product: broccoli
+    quantity: 1
+    unit: unit

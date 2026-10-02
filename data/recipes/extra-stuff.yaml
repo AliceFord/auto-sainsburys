@@ -1,0 +1,15 @@
+name: Extra Stuff
+
+ingredients:
+  - product: digestives
+    quantity: 1
+    unit: unit
+
+  - product: oranges
+    quantity: 4
+    unit: unit
+
+  - product: breadsticks
+    quantity: 2
+    unit: unit
+  

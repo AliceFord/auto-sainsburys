@@ -1,8 +1,8 @@
-name: Katsu Curry
+name: Dhal
 
 ingredients:
   - product: onion
-    quantity: 1
+    quantity: 2
     unit: unit
 
   - product: carrot
@@ -10,17 +10,17 @@ ingredients:
     unit: unit
 
   - product: celery
-    quantity: 1
+    quantity: 2
     unit: unit
 
   - product: veg-stock
-    quantity: 1
+    quantity: 2
     unit: unit
   
-  - product: tofu-xl
+  - product: tinned-tomatoes
     quantity: 1
     unit: unit
 
-  - product: breadcrumbs
-    quantity: 50
+  - product: lentils
+    quantity: 400
     unit: g

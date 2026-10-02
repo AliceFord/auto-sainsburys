@@ -1,26 +1,26 @@
-name: Katsu Curry
+name: Veg Bolognese
 
 ingredients:
   - product: onion
     quantity: 1
     unit: unit
-
+  
   - product: carrot
-    quantity: 2
+    quantity: 1
     unit: unit
 
   - product: celery
     quantity: 1
     unit: unit
 
-  - product: veg-stock
-    quantity: 1
-    unit: unit
-  
-  - product: tofu-xl
+  - product: quorn
     quantity: 1
     unit: unit
 
-  - product: breadcrumbs
-    quantity: 50
-    unit: g
+  - product: passata
+    quantity: 1
+    unit: unit
+
+  - product: spaghetti
+    quantity: 1
+    unit: unit

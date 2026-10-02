@@ -1,4 +1,4 @@
-name: Katsu Curry
+name: Fried Rice
 
 ingredients:
   - product: onion
@@ -6,21 +6,13 @@ ingredients:
     unit: unit
 
   - product: carrot
-    quantity: 2
+    quantity: 1
     unit: unit
 
   - product: celery
     quantity: 1
     unit: unit
 
-  - product: veg-stock
+  - product: tofu
     quantity: 1
     unit: unit
-  
-  - product: tofu-xl
-    quantity: 1
-    unit: unit
-
-  - product: breadcrumbs
-    quantity: 50
-    unit: g

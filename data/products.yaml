@@ -11,3 +11,101 @@ carrot:
     product_uid: "6002373"
     quantity: 6
     unit: unit
+
+celery:
+  name: Celery
+  sainsburys:
+    product_uid: "805353"
+    quantity: 6
+    unit: unit
+
+veg-stock:
+  name: Vegetable Stock
+  sainsburys:
+    product_uid: "6809100"
+    quantity: 6
+    unit: unit
+
+tofu-xl:
+  name: Tofu (big nice)
+  sainsburys:
+    product_uid: "7938858"
+    quantity: 1
+    unit: unit
+
+breadcrumbs:
+  name: Breadcrumbs
+  sainsburys:
+    product_uid: "7478066"
+    quantity: 230
+    unit: g
+
+tofu:
+  name: Tofu
+  sainsburys:
+    product_uid: "8043465"
+    quantity: 1
+    unit: unit
+
+broccoli:
+  name: Broccoli
+  sainsburys:
+    product_uid: "1192001"
+    quantity: 1
+    unit: unit
+
+quorn:
+  name: Quorn
+  sainsburys:
+    product_uid: "3080313"
+    quantity: 1
+    unit: unit
+
+passata:
+  name: Passata
+  sainsburys:
+    product_uid: "7578876"
+    quantity: 1
+    unit: unit
+
+spaghetti:
+  name: Spaghetti
+  sainsburys:
+    product_uid: "32056"
+    quantity: 1
+    unit: unit
+
+tinned-tomatoes:
+  name: Tinned Tomatoes
+  sainsburys:
+    product_uid: "7640425"
+    quantity: 1
+    unit: unit
+
+lentils:
+  name: Lentils
+  sainsburys:
+    product_uid: "8161945"
+    quantity: 1000
+    unit: g
+
+digestives:
+  name: Plain Digestives
+  sainsburys:
+    product_uid: "8202499"
+    quantity: 1
+    unit: unit
+
+oranges:
+  name: Oranges
+  sainsburys:
+    product_uid: "6310579"
+    quantity: 4
+    unit: unit
+
+breadsticks:
+  name: Breadsticks
+  sainsburys:
+    product_uid: "447010"
+    quantity: 1
+    unit: unit
