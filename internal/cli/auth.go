@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/AliceFord/auto-sainsburys/internal/sainsburys"
 	"github.com/spf13/cobra"
 )
@@ -38,6 +40,8 @@ func runAuthLogin(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
+	fmt.Println("Authenticated.")
 
 	return sainsburys.WriteSessionToFile(cookies)
 }

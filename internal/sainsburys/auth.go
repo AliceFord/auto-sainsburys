@@ -15,21 +15,28 @@ func AuthLogin() ([]playwright.Cookie, error) {
 	}
 	defer pw.Stop()
 
-	browser, err := pw.Chromium.Launch(playwright.BrowserTypeLaunchOptions{
-		Headless: playwright.Bool(false),
-	})
+	ctx, err := pw.Chromium.LaunchPersistentContext(
+		".auto-sainsburys-browser",
+		playwright.BrowserTypeLaunchPersistentContextOptions{
+			Headless: playwright.Bool(false),
+		},
+	)
 	if err != nil {
 		return nil, err
 	}
+	defer ctx.Close()
 
-	ctx, err := browser.NewContext()
-	if err != nil {
-		return nil, err
-	}
+	pages := ctx.Pages()
 
-	page, err := ctx.NewPage()
-	if err != nil {
-		return nil, err
+	var page playwright.Page
+
+	if len(pages) > 0 {
+		page = pages[0]
+	} else {
+		page, err = ctx.NewPage()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	_, err = page.Goto(
@@ -50,6 +57,26 @@ func AuthLogin() ([]playwright.Cookie, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	_, _ = bufio.NewReader(os.Stdin).ReadBytes('\n')
+
+	// Explicitly persist cookies + localStorage + IndexedDB.
+	_, err = ctx.StorageState(
+		playwright.BrowserContextStorageStateOptions{
+			Path: playwright.String(".auto-sainsburys-browser/storageState.json"),
+		},
+	)
+	if err != nil {
+		_ = ctx.Close()
+		return nil, fmt.Errorf("save authentication state: %w", err)
+	}
+
+	// Close gracefully so Chromium can flush the persistent profile.
+	if err := ctx.Close(); err != nil {
+		return nil, fmt.Errorf("close browser context: %w", err)
+	}
+
+	fmt.Println("Authentication state saved.")
 
 	return cookies, nil
 }

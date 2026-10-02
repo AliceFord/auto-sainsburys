@@ -7,12 +7,14 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
+	"time"
 
 	"github.com/AliceFord/auto-sainsburys/internal/plan"
 )
 
 const (
-	storeNumber = "0560"
+	storeNumber = "0600"
 	slotBooked  = false
 )
 
@@ -91,19 +93,19 @@ func (c *Client) SearchProduct(productUid string) (Product, error) {
 
 	// Search for product with matching productUid
 	for _, product := range result.Products {
-		if product.ProductUID == fmt.Sprintf("%d", productUid) {
+		if product.ProductUID == fmt.Sprintf("%s", productUid) {
 			return product, nil
 		}
 	}
 
-	return Product{}, fmt.Errorf("product with UID %d not found", productUid)
+	return Product{}, fmt.Errorf("product with UID %s not found", productUid)
 }
 
 func (c *Client) ValidatePlan(p *plan.Plan) {
 	for i := range p.Items {
 		item := &p.Items[i]
 
-		product, err := c.SearchProduct(item.SKU)
+		product, err := c.SearchProduct(item.ProductUID)
 		if err != nil {
 			item.ValidationStatus = plan.ValidationInvalid
 			item.ValidationReason = fmt.Sprintf("error searching product: %v", err)
@@ -121,19 +123,14 @@ func (c *Client) ValidatePlan(p *plan.Plan) {
 	}
 }
 
-func (c *Client) AddItem(item plan.PlanItem) error {
-	body := []AddItemRequest{
-		{
-			SainID:              item.SainsId,
-			SKU:                 item.SKU,
-			UOM:                 "ea",
-			Quantity:            item.OrderQuantity,
-			SelectedCatchweight: "$undefined",
-			StoreNumber:         "0600",
-			SlotBooked:          false,
-			PickTime:            "$undefined",
-			IsBasketCreated:     true,
-		},
+func (c *Client) AddItem(productUid string, quantity int) error {
+	pickTime := time.Now().AddDate(0, 0, 1).Format("2006-01-02T15:04:05.000Z")
+
+	body := AddItemRequest{
+		ProductUID:          productUid,
+		Quantity:            quantity,
+		UOM:                 "ea",
+		SelectedCatchweight: "",
 	}
 
 	data, err := json.Marshal(body)
@@ -141,7 +138,12 @@ func (c *Client) AddItem(item plan.PlanItem) error {
 		return err
 	}
 
-	endpoint := "https://www.sainsburys.co.uk/groceries/product/sainsburys-brown-onions-x3"
+	params := url.Values{}
+	params.Set("store_number", storeNumber)
+	params.Set("pick_time", pickTime)
+	params.Set("slot_booked", strconv.FormatBool(slotBooked))
+
+	endpoint := "https://www.sainsburys.co.uk/groceries-api/gol-services/basket/v2/basket/item?" + params.Encode()
 
 	req, err := http.NewRequest(http.MethodPost, endpoint, bytes.NewReader(data))
 	if err != nil {
@@ -197,7 +199,7 @@ func (c *Client) AddPlan(p *plan.Plan) error {
 			return fmt.Errorf("cannot add item %s with non-positive order quantity %d to basket", item.Name, item.OrderQuantity)
 		}
 
-		err := c.AddItem(item)
+		err := c.AddItem(item.ProductUID, item.OrderQuantity)
 		if err != nil {
 			return fmt.Errorf("failed to add item %s to basket: %v", item.Name, err)
 		}

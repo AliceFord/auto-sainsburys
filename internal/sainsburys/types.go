@@ -19,15 +19,10 @@ func NewClient(cookies []playwright.Cookie) *Client {
 }
 
 type AddItemRequest struct {
-	SainID              string `json:"sainId"`
-	SKU                 string `json:"sku"`
-	UOM                 string `json:"uom"`
+	ProductUID          string `json:"product_uid"`
 	Quantity            int    `json:"quantity"`
-	SelectedCatchweight string `json:"selectedCatchweight"`
-	StoreNumber         string `json:"storeNumber"`
-	SlotBooked          bool   `json:"slotBooked"`
-	PickTime            string `json:"pickTime"`
-	IsBasketCreated     bool   `json:"isBasketCreated"`
+	UOM                 string `json:"uom"`
+	SelectedCatchweight string `json:"selected_catchweight"`
 }
 
 type Product struct {

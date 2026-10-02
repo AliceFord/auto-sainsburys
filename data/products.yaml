@@ -1,14 +1,13 @@
 onion:
   name: Onion
   sainsburys:
-    sain_id: ddh1vejr
-    sku: 131544
+    product_uid: "131544"
     quantity: 3
     unit: unit
 
 carrot:
   name: Carrot
   sainsburys:
-    product_uid: 6002373
+    product_uid: "6002373"
     quantity: 6
     unit: unit
