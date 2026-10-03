@@ -7,18 +7,33 @@ import (
 
 	"github.com/AliceFord/auto-sainsburys/internal/plan"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+)
+
+var (
+	editedQuantityStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFF00")) // yellow
+	zeroQuantityStyle   = lipgloss.NewStyle().Foreground(lipgloss.Color("#FF0000")) // red
+	cursorStyle         = lipgloss.NewStyle().Foreground(lipgloss.Color("#00FF00")) // green
 )
 
 type orderEditor struct {
-	plan   *plan.Plan
-	cursor int
-	input  string
-	done   bool
+	plan               *plan.Plan
+	originalQuantities []int
+	cursor             int
+	input              string
+	done               bool
 }
 
 func newOrderEditor(p *plan.Plan) *orderEditor {
+	originalQuantities := make([]int, len(p.Items))
+
+	for i, item := range p.Items {
+		originalQuantities[i] = item.OrderQuantity
+	}
+
 	return &orderEditor{
-		plan: p,
+		plan:               p,
+		originalQuantities: originalQuantities,
 	}
 }
 
@@ -97,28 +112,21 @@ func (e orderEditor) View() string {
 
 	for i, item := range e.plan.Items {
 		line := fmt.Sprintf(
-			"[%d] %s (%g %s)",
-			item.OrderQuantity,
+			"%s %s (%g %s)",
+			e.renderQuantity(i),
 			item.Name,
 			item.ProductUnits,
 			item.Unit,
 		)
 
 		if i == e.cursor {
-			b.WriteString("> " + line + "\n")
+			b.WriteString(cursorStyle.Render("> ") + line + "\n")
 		} else {
 			b.WriteString("  " + line + "\n")
 		}
 	}
 
 	b.WriteString("\n")
-
-	if e.input != "" {
-		b.WriteString(fmt.Sprintf(
-			"Quantity: %s\n",
-			e.input,
-		))
-	}
 
 	b.WriteString(
 		"↑/↓ navigate • type number to change quantity • enter confirm • q cancel",
@@ -149,4 +157,19 @@ func EditOrder(p *plan.Plan) error {
 	}
 
 	return nil
+}
+
+func (e orderEditor) renderQuantity(i int) string {
+	quantity := e.plan.Items[i].OrderQuantity
+
+	text := fmt.Sprintf("[%d]", quantity)
+
+	switch quantity {
+	case e.originalQuantities[i]:
+		return text
+	case 0:
+		return zeroQuantityStyle.Render(text)
+	default:
+		return editedQuantityStyle.Render(text)
+	}
 }

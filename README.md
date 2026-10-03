@@ -1,5 +1,19 @@
 ## Automate the Sainsbury's order
 
+### Building
+
+`go build -o food.exe`
+
+### Usage
+
+Edit `data/` to contain correct recipes, then build.
+
+`food auth login`  - authenticate
+`food auth status` - check login succeeded
+`food plan`        - plan order
+`food validate`    - validate plan is all available
+`food order`       - order validated plan
+
 ### Rough plan
 - Store recipes in yaml (recipe: ingredients)
 - Store product catalogue in yaml (for each recipe, store the Sainsbury's UID we want to buy)

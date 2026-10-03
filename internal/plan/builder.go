@@ -61,7 +61,5 @@ func Build(catalogue product.Catalogue, recipes []recipe.Recipe) (*Plan, error) 
 		})
 	}
 
-	fmt.Printf("plan: %+v\n", p)
-
 	return p, nil
 }
