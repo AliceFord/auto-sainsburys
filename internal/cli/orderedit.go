@@ -22,6 +22,9 @@ type orderEditor struct {
 	cursor             int
 	input              string
 	done               bool
+
+	// Terminal height
+	height int
 }
 
 func newOrderEditor(p *plan.Plan) *orderEditor {
@@ -43,6 +46,8 @@ func (e orderEditor) Init() tea.Cmd {
 
 func (e orderEditor) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		e.height = msg.Height
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c", "q":
@@ -110,7 +115,15 @@ func (e orderEditor) View() string {
 	b.WriteString("\n")
 	b.WriteString("Order plan\n\n")
 
-	for i, item := range e.plan.Items {
+	start, end := e.visibleRange()
+
+	if start > 0 {
+		b.WriteString("  ↑ more\n")
+	}
+
+	for i := start; i < end; i++ {
+		item := e.plan.Items[i]
+
 		line := fmt.Sprintf(
 			"%s %s (%g %s)",
 			e.renderQuantity(i),
@@ -124,6 +137,10 @@ func (e orderEditor) View() string {
 		} else {
 			b.WriteString("  " + line + "\n")
 		}
+	}
+
+	if end < len(e.plan.Items) {
+		b.WriteString("  ↓ more\n")
 	}
 
 	b.WriteString("\n")
@@ -172,4 +189,23 @@ func (e orderEditor) renderQuantity(i int) string {
 	default:
 		return editedQuantityStyle.Render(text)
 	}
+}
+
+func (e orderEditor) visibleRange() (int, int) {
+	// 6 lines for header, footer, and padding
+	available := max(e.height-6, 1)
+
+	if available >= len(e.plan.Items) {
+		return 0, len(e.plan.Items)
+	}
+
+	start := max(e.cursor-available/2, 0)
+
+	end := start + available
+	if end > len(e.plan.Items) {
+		end = len(e.plan.Items)
+		start = end - available
+	}
+
+	return start, end
 }
